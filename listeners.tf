@@ -2,7 +2,7 @@ resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.main.arn
   port              = "443"
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
   certificate_arn   = aws_acm_certificate_validation.shared.certificate_arn
 
   default_action {
@@ -30,7 +30,7 @@ resource "aws_lb_listener" "http" {
 ### VPN
 resource "aws_lb_listener_certificate" "vpn" {
   listener_arn    = aws_lb_listener.https.arn
-  certificate_arn   = aws_acm_certificate_validation.vpn.certificate_arn
+  certificate_arn = aws_acm_certificate_validation.vpn.certificate_arn
 }
 
 resource "aws_lb_listener_rule" "vpn" {
@@ -52,7 +52,7 @@ resource "aws_lb_listener_rule" "vpn" {
 ### GITLAB
 resource "aws_lb_listener_certificate" "gitlab" {
   listener_arn    = aws_lb_listener.https.arn
-  certificate_arn   = aws_acm_certificate_validation.gitlab.certificate_arn
+  certificate_arn = aws_acm_certificate_validation.gitlab.certificate_arn
 }
 
 resource "aws_lb_listener_rule" "gitlab" {
