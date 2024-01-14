@@ -1,0 +1,112 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] aws_acm_certificate.gitlab (expand)" [label = "aws_acm_certificate.gitlab", shape = "box"]
+		"[root] aws_acm_certificate.shared (expand)" [label = "aws_acm_certificate.shared", shape = "box"]
+		"[root] aws_acm_certificate.vpn (expand)" [label = "aws_acm_certificate.vpn", shape = "box"]
+		"[root] aws_acm_certificate_validation.gitlab (expand)" [label = "aws_acm_certificate_validation.gitlab", shape = "box"]
+		"[root] aws_acm_certificate_validation.shared (expand)" [label = "aws_acm_certificate_validation.shared", shape = "box"]
+		"[root] aws_acm_certificate_validation.vpn (expand)" [label = "aws_acm_certificate_validation.vpn", shape = "box"]
+		"[root] aws_lb.main (expand)" [label = "aws_lb.main", shape = "box"]
+		"[root] aws_lb_listener.http (expand)" [label = "aws_lb_listener.http", shape = "box"]
+		"[root] aws_lb_listener.https (expand)" [label = "aws_lb_listener.https", shape = "box"]
+		"[root] aws_lb_listener_certificate.gitlab (expand)" [label = "aws_lb_listener_certificate.gitlab", shape = "box"]
+		"[root] aws_lb_listener_certificate.vpn (expand)" [label = "aws_lb_listener_certificate.vpn", shape = "box"]
+		"[root] aws_lb_listener_rule.gitlab (expand)" [label = "aws_lb_listener_rule.gitlab", shape = "box"]
+		"[root] aws_lb_listener_rule.vpn (expand)" [label = "aws_lb_listener_rule.vpn", shape = "box"]
+		"[root] aws_lb_target_group.gitlab_https (expand)" [label = "aws_lb_target_group.gitlab_https", shape = "box"]
+		"[root] aws_lb_target_group.vpn_https (expand)" [label = "aws_lb_target_group.vpn_https", shape = "box"]
+		"[root] aws_lb_target_group_attachment.gitlab_https (expand)" [label = "aws_lb_target_group_attachment.gitlab_https", shape = "box"]
+		"[root] aws_lb_target_group_attachment.vpn_https (expand)" [label = "aws_lb_target_group_attachment.vpn_https", shape = "box"]
+		"[root] aws_route53_record.gitlab (expand)" [label = "aws_route53_record.gitlab", shape = "box"]
+		"[root] aws_route53_record.gitlab_certificate_validation (expand)" [label = "aws_route53_record.gitlab_certificate_validation", shape = "box"]
+		"[root] aws_route53_record.shared (expand)" [label = "aws_route53_record.shared", shape = "box"]
+		"[root] aws_route53_record.shared_certificate_validation (expand)" [label = "aws_route53_record.shared_certificate_validation", shape = "box"]
+		"[root] aws_route53_record.vpn (expand)" [label = "aws_route53_record.vpn", shape = "box"]
+		"[root] aws_route53_record.vpn_certificate_validation (expand)" [label = "aws_route53_record.vpn_certificate_validation", shape = "box"]
+		"[root] aws_security_group.alb (expand)" [label = "aws_security_group.alb", shape = "box"]
+		"[root] data.aws_elb_service_account.current (expand)" [label = "data.aws_elb_service_account.current", shape = "box"]
+		"[root] data.aws_route53_zone.gitlab (expand)" [label = "data.aws_route53_zone.gitlab", shape = "box"]
+		"[root] data.aws_route53_zone.shared (expand)" [label = "data.aws_route53_zone.shared", shape = "box"]
+		"[root] data.aws_route53_zone.vpn (expand)" [label = "data.aws_route53_zone.vpn", shape = "box"]
+		"[root] data.aws_subnet.private_networking_1 (expand)" [label = "data.aws_subnet.private_networking_1", shape = "box"]
+		"[root] data.aws_subnet.private_networking_2 (expand)" [label = "data.aws_subnet.private_networking_2", shape = "box"]
+		"[root] data.aws_subnet.private_networking_3 (expand)" [label = "data.aws_subnet.private_networking_3", shape = "box"]
+		"[root] data.aws_vpc.shared (expand)" [label = "data.aws_vpc.shared", shape = "box"]
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"]" [label = "provider[\"registry.terraform.io/hashicorp/aws\"]", shape = "diamond"]
+		"[root] var.gitlab_hosted_zone_name" [label = "var.gitlab_hosted_zone_name", shape = "note"]
+		"[root] var.gitlab_instance_ip" [label = "var.gitlab_instance_ip", shape = "note"]
+		"[root] var.shared_hosted_zone_name" [label = "var.shared_hosted_zone_name", shape = "note"]
+		"[root] var.vpn_hosted_zone_name" [label = "var.vpn_hosted_zone_name", shape = "note"]
+		"[root] var.vpn_instance_ip" [label = "var.vpn_instance_ip", shape = "note"]
+		"[root] var.vpn_subdomain" [label = "var.vpn_subdomain", shape = "note"]
+		"[root] aws_acm_certificate.gitlab (expand)" -> "[root] data.aws_route53_zone.gitlab (expand)"
+		"[root] aws_acm_certificate.shared (expand)" -> "[root] data.aws_route53_zone.shared (expand)"
+		"[root] aws_acm_certificate.vpn (expand)" -> "[root] data.aws_route53_zone.vpn (expand)"
+		"[root] aws_acm_certificate.vpn (expand)" -> "[root] var.vpn_subdomain"
+		"[root] aws_acm_certificate_validation.gitlab (expand)" -> "[root] aws_route53_record.gitlab_certificate_validation (expand)"
+		"[root] aws_acm_certificate_validation.shared (expand)" -> "[root] aws_route53_record.shared_certificate_validation (expand)"
+		"[root] aws_acm_certificate_validation.vpn (expand)" -> "[root] aws_route53_record.vpn_certificate_validation (expand)"
+		"[root] aws_lb.main (expand)" -> "[root] aws_security_group.alb (expand)"
+		"[root] aws_lb.main (expand)" -> "[root] data.aws_subnet.private_networking_1 (expand)"
+		"[root] aws_lb.main (expand)" -> "[root] data.aws_subnet.private_networking_2 (expand)"
+		"[root] aws_lb.main (expand)" -> "[root] data.aws_subnet.private_networking_3 (expand)"
+		"[root] aws_lb_listener.http (expand)" -> "[root] aws_lb.main (expand)"
+		"[root] aws_lb_listener.https (expand)" -> "[root] aws_acm_certificate_validation.shared (expand)"
+		"[root] aws_lb_listener.https (expand)" -> "[root] aws_lb.main (expand)"
+		"[root] aws_lb_listener.https (expand)" -> "[root] aws_lb_target_group.vpn_https (expand)"
+		"[root] aws_lb_listener_certificate.gitlab (expand)" -> "[root] aws_acm_certificate_validation.gitlab (expand)"
+		"[root] aws_lb_listener_certificate.gitlab (expand)" -> "[root] aws_lb_listener.https (expand)"
+		"[root] aws_lb_listener_certificate.vpn (expand)" -> "[root] aws_acm_certificate_validation.vpn (expand)"
+		"[root] aws_lb_listener_certificate.vpn (expand)" -> "[root] aws_lb_listener.https (expand)"
+		"[root] aws_lb_listener_rule.gitlab (expand)" -> "[root] aws_lb_listener.https (expand)"
+		"[root] aws_lb_listener_rule.gitlab (expand)" -> "[root] aws_lb_target_group.gitlab_https (expand)"
+		"[root] aws_lb_listener_rule.gitlab (expand)" -> "[root] var.gitlab_hosted_zone_name"
+		"[root] aws_lb_listener_rule.vpn (expand)" -> "[root] aws_lb_listener.https (expand)"
+		"[root] aws_lb_listener_rule.vpn (expand)" -> "[root] var.vpn_hosted_zone_name"
+		"[root] aws_lb_listener_rule.vpn (expand)" -> "[root] var.vpn_subdomain"
+		"[root] aws_lb_target_group.gitlab_https (expand)" -> "[root] data.aws_vpc.shared (expand)"
+		"[root] aws_lb_target_group.vpn_https (expand)" -> "[root] data.aws_vpc.shared (expand)"
+		"[root] aws_lb_target_group_attachment.gitlab_https (expand)" -> "[root] aws_lb_target_group.gitlab_https (expand)"
+		"[root] aws_lb_target_group_attachment.gitlab_https (expand)" -> "[root] aws_lb_target_group.vpn_https (expand)"
+		"[root] aws_lb_target_group_attachment.gitlab_https (expand)" -> "[root] var.gitlab_instance_ip"
+		"[root] aws_lb_target_group_attachment.vpn_https (expand)" -> "[root] aws_lb_target_group.vpn_https (expand)"
+		"[root] aws_lb_target_group_attachment.vpn_https (expand)" -> "[root] var.vpn_instance_ip"
+		"[root] aws_route53_record.gitlab (expand)" -> "[root] aws_lb.main (expand)"
+		"[root] aws_route53_record.gitlab (expand)" -> "[root] data.aws_route53_zone.gitlab (expand)"
+		"[root] aws_route53_record.gitlab_certificate_validation (expand)" -> "[root] aws_acm_certificate.gitlab (expand)"
+		"[root] aws_route53_record.shared (expand)" -> "[root] aws_lb.main (expand)"
+		"[root] aws_route53_record.shared (expand)" -> "[root] data.aws_route53_zone.shared (expand)"
+		"[root] aws_route53_record.shared_certificate_validation (expand)" -> "[root] aws_acm_certificate.shared (expand)"
+		"[root] aws_route53_record.vpn (expand)" -> "[root] aws_lb.main (expand)"
+		"[root] aws_route53_record.vpn (expand)" -> "[root] data.aws_route53_zone.vpn (expand)"
+		"[root] aws_route53_record.vpn (expand)" -> "[root] var.vpn_subdomain"
+		"[root] aws_route53_record.vpn_certificate_validation (expand)" -> "[root] aws_acm_certificate.vpn (expand)"
+		"[root] aws_security_group.alb (expand)" -> "[root] data.aws_vpc.shared (expand)"
+		"[root] data.aws_elb_service_account.current (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_route53_zone.gitlab (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_route53_zone.gitlab (expand)" -> "[root] var.gitlab_hosted_zone_name"
+		"[root] data.aws_route53_zone.shared (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_route53_zone.shared (expand)" -> "[root] var.shared_hosted_zone_name"
+		"[root] data.aws_route53_zone.vpn (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_route53_zone.vpn (expand)" -> "[root] var.vpn_hosted_zone_name"
+		"[root] data.aws_subnet.private_networking_1 (expand)" -> "[root] data.aws_vpc.shared (expand)"
+		"[root] data.aws_subnet.private_networking_2 (expand)" -> "[root] data.aws_vpc.shared (expand)"
+		"[root] data.aws_subnet.private_networking_3 (expand)" -> "[root] data.aws_vpc.shared (expand)"
+		"[root] data.aws_vpc.shared (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_lb_listener.http (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_lb_listener_certificate.gitlab (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_lb_listener_certificate.vpn (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_lb_listener_rule.gitlab (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_lb_listener_rule.vpn (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_lb_target_group_attachment.gitlab_https (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_lb_target_group_attachment.vpn_https (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_route53_record.gitlab (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_route53_record.shared (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_route53_record.vpn (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] data.aws_elb_service_account.current (expand)"
+		"[root] root" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)"
+	}
+}
+

@@ -1,5 +1,16 @@
 {
   "devDependencies": {
-    "@trunkio/launcher": "^1.2.7"
-  }
+    "@trunkio/launcher": "^1.2.7",
+    "graphviz-cli": "^2.0.0"
+  },
+  "name": "terraform-tt",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-dot": "terraform graph > plan.dot",
+    "generate-png": "graphviz -Tsvg -O plan.dot"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "Test technique terraform pour Web-atrio"
 }
