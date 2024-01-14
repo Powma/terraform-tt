@@ -3,12 +3,36 @@ resource "aws_security_group" "alb" {
   description = "General rules for ALB Interconnexion"
   vpc_id      = data.aws_vpc.shared.id
 
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["${var.vpn_instance_ip}/32", "${var.gitlab_instance_ip}/32"]
+    description = "Allow HTTP traffic from VPN and Gitlab instances"
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["${var.vpn_instance_ip}/32", "${var.gitlab_instance_ip}/32"]
+    description = "Allow HTTPS traffic from VPN and Gitlab instances"
+  }
+
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = [var.subnet_shared_cidr_0, var.subnet_shared_cidr_1, var.subnet_shared_cidr_2]
+    description = "Allow HTTP traffic from specific subnets"
+  }
+
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = [var.subnet_shared_cidr_0, var.subnet_shared_cidr_1, var.subnet_shared_cidr_2]
+    description = "Allow HTTPS traffic from specific subnets"
   }
 
   tags = {
