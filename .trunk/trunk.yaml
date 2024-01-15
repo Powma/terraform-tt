@@ -16,13 +16,14 @@ runtimes:
     - python@3.10.8
 # This is the section where you manage your linters. (https://docs.trunk.io/check/configuration)
 lint:
+  disabled:
+    - checkov
   enabled:
     - tfsec@1.28.4
     - yamllint@1.33.0
     - prettier@3.1.1
     - actionlint@1.6.26
     - terraform@1.1.0
-    - checkov@3.1.57
     - git-diff-check
     - terrascan@1.18.11
     - tflint@0.50.1

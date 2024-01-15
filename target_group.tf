@@ -1,7 +1,7 @@
 resource "aws_lb_target_group" "gitlab_https" {
   name        = "GITLAB-HTTP"
-  port        = 80
-  protocol    = "HTTP"
+  port        = 443
+  protocol    = "HTTPS"
   target_type = "ip"
   vpc_id      = data.aws_vpc.shared.id
 }

@@ -7,7 +7,7 @@ resource "aws_acm_certificate" "vpn" {
   }
 
   tags = {
-    Purpose = "VPN Certificate validation" 
+    Purpose = "VPN Certificate validation"
   }
 }
 

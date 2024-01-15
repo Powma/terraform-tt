@@ -7,7 +7,7 @@ resource "aws_acm_certificate" "gitlab" {
   }
 
   tags = {
-    Purpose = "Gitlab Certificate validation" 
+    Purpose = "Gitlab Certificate validation"
   }
 }
 

@@ -3,34 +3,18 @@ resource "aws_lb_listener" "https" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-  certificate_arn   = aws_acm_certificate_validation.shared.certificate_arn
+  certificate_arn   = var.certificate_arn
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.vpn_https.arn
-  }
-}
-
-resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.main.arn
-  port              = "80"
-  protocol          = "HTTP"
-
-  default_action {
-    type = "redirect"
-
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
+    target_group_arn = var.vpn_https_target_group_arn
   }
 }
 
 ### VPN
 resource "aws_lb_listener_certificate" "vpn" {
   listener_arn    = aws_lb_listener.https.arn
-  certificate_arn = aws_acm_certificate_validation.vpn.certificate_arn
+  certificate_arn = var.vpn_certificate_arn
 }
 
 resource "aws_lb_listener_rule" "vpn" {
@@ -39,7 +23,7 @@ resource "aws_lb_listener_rule" "vpn" {
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.vpn_https.arn
+    target_group_arn = var.vpn_https_target_group_arn
   }
 
   condition {
@@ -52,7 +36,7 @@ resource "aws_lb_listener_rule" "vpn" {
 ### GITLAB
 resource "aws_lb_listener_certificate" "gitlab" {
   listener_arn    = aws_lb_listener.https.arn
-  certificate_arn = aws_acm_certificate_validation.gitlab.certificate_arn
+  certificate_arn = var.gitlab_certificate_arn
 }
 
 resource "aws_lb_listener_rule" "gitlab" {
@@ -61,7 +45,7 @@ resource "aws_lb_listener_rule" "gitlab" {
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.gitlab_https.arn
+    target_group_arn = var.gitlab_https_target_group_arn
   }
 
   condition {
