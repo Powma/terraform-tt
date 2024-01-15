@@ -8,9 +8,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-dot": "terraform graph > plan.dot",
-    "generate-png": "graphviz -Tsvg -O plan.dot"
+    "generate-png": "graphviz -Tsvg -O plan.dot",
+    "docs": "terraform-docs markdown table . > docs.md"
   },
-  "author": "",
   "license": "ISC",
   "description": "Test technique terraform pour Web-atrio"
 }
